@@ -1,0 +1,15 @@
+{
+  "name": "itc-greythr-cli",
+  "version": "1.0.0",
+  "description": "CLI version of In Time Calculator for greytHR",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "z0h4n",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "request": "^2.88.0"
+  }
+}
