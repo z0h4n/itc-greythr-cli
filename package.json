@@ -9,6 +9,9 @@
   "author": "z0h4n",
   "license": "ISC",
   "dependencies": {
+    "clear": "^0.1.0",
+    "compare-versions": "^3.4.0",
+    "konsole.table": "^0.1.1",
     "moment": "^2.24.0",
     "request": "^2.88.0"
   }

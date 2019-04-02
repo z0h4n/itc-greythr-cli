@@ -1,3 +1,5 @@
+require('./polyfills');
+
 const moment = require('moment');
 const input = require('./input');
 const greythrAPI = require('./greythr-api');
@@ -105,9 +107,7 @@ const calculator = {
       return;
     }
 
-    if (lastSwipe && lastSwipe.type === 'In') {
-      setTimeout(calculator.display.bind(null, swipeTable, swipePairs, lastSwipe), 1000);
-    }
+    setTimeout(calculator.display.bind(null, swipeTable, swipePairs, lastSwipe), 1000);
   },
 
   calculate(swipePairs = [], lastSwipe = null) {
