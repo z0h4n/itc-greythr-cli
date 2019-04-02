@@ -94,11 +94,18 @@ const calculator = {
       return;
     }
 
+    const inCount = swipeTable.filter(swipe => swipe.Type === 'In').length;
+    const outCount = swipeTable.filter(swipe => swipe.Type === 'Out').length;
+
+    if (inCount - outCount > 1) {
+      console.log('WARNING: Swipe errors detected\n');
+    }
+
     console.table(swipeTable);
 
     let time = calculator.calculate(swipePairs, lastSwipe);
 
-    console.log(`\n${time}`);
+    console.log(`\nTime Completed: ${time}`);
 
     if (moment().diff(swipes.lastUpdated) > 30000) {
       console.clear();
