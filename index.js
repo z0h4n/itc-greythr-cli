@@ -1,9 +1,12 @@
 const moment = require('moment');
-const rlInterface = require('./rl-interface');
+const input = require('./input');
 const greythrAPI = require('./greythr-api');
 
 const login = {
-  prompt(loginError = null) {
+  username: '',
+  password: '',
+
+  async prompt(loginError = null) {
     console.clear();
 
     console.log('greytHR Login\n');
@@ -12,19 +15,24 @@ const login = {
       console.log(`Login Error: ${loginError}\n`);
     }
 
-    rlInterface.question('Username: ', username => {
-      rlInterface.question('Password: ', async password => {
-        rlInterface.stdoutMuted = false;
-        const { error } = await greythrAPI.login(username, password);
+    const username = await input.get('Username: ');
+    const password = await input.get('Password: ', true);
 
-        if (!error) {
-          swipes.get();
-        } else {
-          login.prompt(error);
-        }
-      });
-      rlInterface.stdoutMuted = true;
-    });
+    login.handler(username, password);
+  },
+
+  async handler(username, password) {
+    const { error } = await greythrAPI.login(username, password);
+
+    if (!error) {
+      // Cache username and password for reconnecting if needed
+      login.username = username;
+      login.password = password;
+
+      swipes.get();
+    } else {
+      login.prompt(error);
+    }
   }
 };
 
@@ -38,7 +46,9 @@ const swipes = {
     if (error) {
       console.clear();
       console.log(error);
-      process.exit(error);
+      console.log(`\nReconnecting ...`);
+      setTimeout(login.handler.bind(null, login.username, login.password), 1000);
+      return;
     }
 
     const swipeTable = swipeData.map(swipe => {
@@ -87,7 +97,7 @@ const calculator = {
 
     console.log(`\n${time}`);
 
-    if (moment().diff(swipes.lastUpdated) > 60000) {
+    if (moment().diff(swipes.lastUpdated) > 30000) {
       console.clear();
       console.log('Refreshing swipes. Please wait ...');
       setTimeout(swipes.get, 1000);
@@ -100,17 +110,23 @@ const calculator = {
   },
 
   calculate(swipePairs = [], lastSwipe = null) {
-    let time = 0;
+    let msecs = 0;
 
     for (let pair of swipePairs) {
-      time += pair.out.diff(pair.in);
+      msecs += pair.out.diff(pair.in);
     }
 
     if (lastSwipe && lastSwipe.type === 'In') {
-      time += moment().valueOf() - lastSwipe.time.valueOf();
+      msecs += moment().valueOf() - lastSwipe.time.valueOf();
     }
 
-    let hours = time / (1000 * 60 * 60);
+    return timeUtil.msecsToHHMMSS(msecs);
+  }
+};
+
+const timeUtil = {
+  msecsToHHMMSS(msecs = 0) {
+    let hours = msecs / (1000 * 60 * 60);
     let minutes = (hours - parseInt(hours)) * 60;
     let seconds = (minutes - parseInt(minutes)) * 60;
 
@@ -123,6 +139,12 @@ const calculator = {
     seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
     return `${hours}:${minutes}:${seconds}`;
+  },
+
+  msecsToSS(msecs = 0) {
+    let secs = parseInt(msecs / 1000);
+    secs = Math.max(0, secs);
+    return secs < 10 ? `0${secs}` : `${secs}`;
   }
 };
 

@@ -23,8 +23,15 @@ module.exports = {
 
         const { statusCode, headers: { location } } = httpResponse;
 
-        if (statusCode === 302 && location === `${origin}/home.do`) {
-          resolve({ error: null });
+        if (statusCode === 302) {
+          // Redirection
+          if (location.includes('home.do')) {
+            resolve({ error: null });
+          } else if (location.includes('login.do')) {
+            resolve({ error: 'Invalid username or password' });
+          } else {
+            resolve({ error: `Uncaught error: ${location}` });
+          }
         } else {
           resolve({ error: statusCode });
         }

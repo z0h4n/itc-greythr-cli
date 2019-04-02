@@ -14,4 +14,14 @@ rlInterface._writeToOutput = function _writeToOutput(stringToWrite) {
     rlInterface.output.write(stringToWrite);
 };
 
-module.exports = rlInterface;
+module.exports = {
+  get(msg, isPassword = false) {
+    return new Promise(resolve => {
+      rlInterface.question(msg, answer => {
+        rlInterface.stdoutMuted = false;
+        resolve(answer);
+      });
+      rlInterface.stdoutMuted = isPassword;
+    });
+  }
+};
