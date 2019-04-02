@@ -97,7 +97,7 @@ const calculator = {
     const inCount = swipeTable.filter(swipe => swipe.Type === 'In').length;
     const outCount = swipeTable.filter(swipe => swipe.Type === 'Out').length;
 
-    if (inCount - outCount > 1) {
+    if (Math.abs(inCount - outCount) > 1) {
       console.log('WARNING: Swipe errors detected\n');
     }
 
