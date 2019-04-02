@@ -16,6 +16,12 @@ npm install
 npm start
 ```
 
+**Config**
+You can update `config.json` to store following values
+- `origin` - Your company's origin _**Required**_
+- `username` - Login username
+- `password` - Login password _**Not Recommended**_
+
 **Screenshots**
 
 <image src="./screenshots/01.png">
