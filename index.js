@@ -1,6 +1,7 @@
 const moment = require('moment');
 const input = require('./input');
 const greythrAPI = require('./greythr-api');
+const config = require('./config.json');
 
 const login = {
   username: '',
@@ -15,8 +16,8 @@ const login = {
       console.log(`Login Error: ${loginError}\n`);
     }
 
-    const username = await input.get('Username: ');
-    const password = await input.get('Password: ', true);
+    const username = (config.username && config.username.trim()) || await input.get('Username: ');
+    const password = (config.password && config.password.trim()) || await input.get('Password: ', true);
 
     login.handler(username, password);
   },
