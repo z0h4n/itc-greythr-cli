@@ -11,3 +11,8 @@ npm install
 ```
 npm start
 ```
+
+**Screenshots**
+
+<image src="./screenshots/01.png">
+<image src="./screenshots/02.png">
