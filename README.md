@@ -1,9 +1,5 @@
 # A lightweight CLI based In Time Calculator for [greytHR](https://www.greythr.com)
 
-**Prerequisite**
-
-[Node.js v10+](https://nodejs.org/en/)
-
 **Installation**
 ```
 git clone https://github.com/z0h4n/itc-greythr-cli.git
