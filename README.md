@@ -18,7 +18,6 @@ You can update `config.json` to store following values
 - `username` - Login username
 - `password` - Login password _**Not Recommended**_
 
-**Screenshots**
+**Example**
 
-<image src="./screenshots/01.png">
-<image src="./screenshots/02.png">
+<image src="./example.gif">
