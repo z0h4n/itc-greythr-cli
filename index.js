@@ -1,9 +1,9 @@
 require('./polyfills');
 
 const moment = require('moment');
-const input = require('./input');
 const greythrAPI = require('./greythr-api');
 const config = require('./config.json');
+const readlineSync = require('readline-sync');
 
 const login = {
   username: '',
@@ -18,8 +18,8 @@ const login = {
       console.log(`Login Error: ${loginError}\n`);
     }
 
-    const username = (!loginError && config.username && config.username.trim()) || await input.get('Username: ');
-    const password = (!loginError && config.password && config.password.trim()) || await input.get('Password: ', true);
+    const username = (!loginError && config.username && config.username.trim()) || readlineSync.question('Username: ');
+    const password = (!loginError && config.password && config.password.trim()) || readlineSync.question('Password: ', { hideEchoBack: true });
 
     login.handler(username, password);
   },

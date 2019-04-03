@@ -13,6 +13,7 @@
     "compare-versions": "^3.4.0",
     "konsole.table": "^0.1.1",
     "moment": "^2.24.0",
+    "readline-sync": "^1.4.9",
     "request": "^2.88.0"
   }
 }
