@@ -1,7 +1,7 @@
 const request = require('request').defaults({ jar: true });
 const moment = require('moment');
 
-const { origin = '' } = require('./config.json');
+const { origin = '' } = require('./../config.json');
 
 if (!origin.trim()) {
   console.log('Add origin in config.json\n');
