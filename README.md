@@ -13,11 +13,24 @@ npm start
 ```
 
 **Config**
-You can update `config.json` to store following values
-- `origin` - Your company's origin _**Required**_
-- `username` - Login username
-- `password` - Login password _**Not Recommended**_
-
+```
+{
+  "origin": "<Your company's origin>", 
+  "username": "<Your login username>", // Optional
+  "password": "<Your login password>", // Optional
+  "sessions": [
+    {
+      "name": "<Session name>",
+      "time": <Session time in milliseconds>
+    },
+    {
+      "name": "<Session name>",
+      "time": <Session time in milliseconds>
+    },
+    ...
+  ] // Optional
+}
+```
 **Example**
 
 <image src="./example.gif">
