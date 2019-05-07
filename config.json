@@ -1,5 +1,23 @@
 {
   "origin": "https://mitr.greythr.com",
   "username": "",
-  "password": ""
+  "password": "",
+  "sessions": [
+    {
+      "name": "Half Day",
+      "time": 16200000
+    },
+    {
+      "name": "Full Day",
+      "time": 30600000
+    },
+    {
+      "name": "Full Day + Half Day Compoff",
+      "time": 41400000
+    },
+    {
+      "name": "Full Day + Full Day Compoff",
+      "time": 55800000
+    }
+  ]
 }

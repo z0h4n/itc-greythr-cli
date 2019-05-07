@@ -2,6 +2,7 @@ const moment = require('moment');
 const EventEmitter = require('events');
 const timeUtil = require('./time-util');
 const delay = require('./delay');
+const { sessions } = require('./../config.json');
 
 class Calculator extends EventEmitter {
   async display(swipeTable = [], swipePairs = [], lastSwipe = null, lastUpdated = moment()) {
@@ -26,7 +27,20 @@ class Calculator extends EventEmitter {
 
     let time = this.calculate(swipePairs, lastSwipe);
 
-    console.log(`\nTime Completed: ${time}`);
+    console.log(`\n Time Completed: ${timeUtil.msecsToHHMMSS(time)} \n`);
+
+    if (Array.isArray(sessions)) {
+      const sessionTable = sessions.map(session => {
+        const remainingTime = session.time - time;
+        return {
+          'Session Name': session.name,
+          'Session Time': timeUtil.msecsToHHMMSS(session.time),
+          'Remaining Time': remainingTime <= 0 ? 'Session Complete' : timeUtil.msecsToHHMMSS(remainingTime),
+          'Completes On': remainingTime <= 0 ? 'Session Complete' : moment(moment.now() + remainingTime).format('hh:mm:ss A')
+        }
+      });
+      console.table(sessionTable);
+    }
 
     if (moment().diff(lastUpdated) > 30000) {
       // Get new swipes after every 30 seconds to prevent session timeout
@@ -53,7 +67,7 @@ class Calculator extends EventEmitter {
       msecs += moment().valueOf() - lastSwipe.time.valueOf();
     }
 
-    return timeUtil.msecsToHHMMSS(msecs);
+    return msecs;
   }
 }
 
